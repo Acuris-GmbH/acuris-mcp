@@ -1,0 +1,43 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
+  "name": "io.github.acuris-gmbh/acuris-mcp",
+  "description": "Acuris address validation & geocoding: 240+ countries, Royal Mail PAF (UK, UDPRN+UPRN), free US/Canada census enrichment (FIPS, tract, CBSA, districts). Honest verified/corrected verdicts; failed lookups auto-refunded.",
+  "repository": {
+    "url": "https://github.com/Acuris-GmbH/acuris-mcp",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "websiteUrl": "https://api.acuris-geo.com/docs/mcp",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.acuris-geo.com/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer <your Acuris API key> — get a free trial key via the request_trial_key tool or https://www.acuris-geo.com/acuris-pricing/",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "acuris-mcp",
+      "version": "1.0.0",
+      "transport": { "type": "stdio" },
+      "runtimeHint": "uvx",
+      "runtimeArguments": [{ "type": "positional", "value": "--stdio" }],
+      "environmentVariables": [
+        {
+          "name": "ACURIS_API_KEY",
+          "description": "Your Acuris API key (free trial: request_trial_key tool)",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
