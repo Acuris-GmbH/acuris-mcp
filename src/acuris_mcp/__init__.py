@@ -108,6 +108,15 @@ def _client_credentials(ctx: Context | None) -> tuple[str | None, str | None]:
             if m:
                 key = m.group(1)
             key = (h.get("x-acuris-key") or key or "").strip() or None
+            if not key:
+                # URL-config clients (e.g. Smithery) pass the key as a query
+                # param appended to the endpoint URL rather than a header.
+                try:
+                    qp = req.query_params
+                    key = (qp.get("apiKey") or qp.get("api_key")
+                           or qp.get("key") or "").strip() or None
+                except Exception:
+                    pass
             # nginx sets X-Forwarded-For to the real client; keep the first hop.
             xff = (h.get("x-forwarded-for") or "").split(",")[0].strip()
             ip = xff or (req.client.host if req.client else None)
